@@ -3,7 +3,11 @@ import { headers } from "./api";
 
 const COMMON_PATH = "/api/recruitments";
 
-export const fetchItems = (recruitmentId) => axios.get(`${COMMON_PATH}/${recruitmentId}/items`);
+export const fetchRecruitmentItems = (recruitmentId) =>
+  axios.get(`${COMMON_PATH}/${recruitmentId}/items`);
+
+// NOTE: 현재 사용 불가, 지원화면도 해당 API 사용할 수 있는지 여부가 바뀌어야 함
+// export const fetchRecruitment = (recruitmentId) => axios.get(`${COMMON_PATH}/${recruitmentId}`);
 
 export const fetchRecruitments = () => axios.get(COMMON_PATH);
 

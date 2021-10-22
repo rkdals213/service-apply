@@ -28,12 +28,7 @@ const errorMessageInitialValue = {
   [APPLICATION_REGISTER_FORM_NAME.REFERENCE_URL]: "",
 };
 
-const useApplicationRegisterForm = ({
-  recruitmentId,
-  currentRecruitment,
-  recruitmentItems,
-  status,
-}) => {
+const useApplicationRegisterForm = ({ recruitmentId, recruitmentItems, status }) => {
   const [requiredForm, setRequiredForm] = useState(requiredFormInitialValue);
   const [form, setForm] = useState(formInitialValue);
   const [errorMessage, setErrorMessage] = useState(errorMessageInitialValue);
@@ -103,7 +98,6 @@ const useApplicationRegisterForm = ({
         status: PARAM.APPLICATION_FORM_STATUS.EDIT,
       }),
       search: generateQuery({ recruitmentId }),
-      state: { currentRecruitment },
     });
   };
 
@@ -141,6 +135,12 @@ const useApplicationRegisterForm = ({
   };
 
   useEffect(() => {
+    if (!recruitmentId) {
+      history.replace(PATH.RECRUITS);
+
+      return;
+    }
+
     init();
   }, [status]);
 

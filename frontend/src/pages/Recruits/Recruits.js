@@ -39,12 +39,7 @@ const Recruits = () => {
 
   const goToNewApplicationFormPage = (recruitment) => {
     if (!token) {
-      history.push({
-        pathname: PATH.LOGIN,
-        state: {
-          currentRecruitment: recruitment,
-        },
-      });
+      history.push(PATH.LOGIN);
 
       return;
     }
@@ -54,9 +49,6 @@ const Recruits = () => {
         status: PARAM.APPLICATION_FORM_STATUS.NEW,
       }),
       search: generateQuery({ recruitmentId: recruitment.id }),
-      state: {
-        currentRecruitment: recruitment,
-      },
     });
   };
 

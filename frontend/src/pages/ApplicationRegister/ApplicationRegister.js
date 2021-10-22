@@ -17,6 +17,7 @@ import PATH, { PARAM } from "../../constants/path";
 import useApplicationRegisterForm, {
   APPLICATION_REGISTER_FORM_NAME,
 } from "../../hooks/useApplicationRegisterForm";
+import useRecruitmentContext from "../../hooks/useRecruitmentContext";
 import useRecruitmentItem from "../../hooks/useRecruitmentItem";
 import useTokenContext from "../../hooks/useTokenContext";
 import { formatDateTime } from "../../utils/format/date";
@@ -29,9 +30,9 @@ const ApplicationRegister = () => {
   const { status } = useParams();
   const { token } = useTokenContext();
 
-  const { recruitmentId } = parseQuery(location.search);
-  const { currentRecruitment } = location.state;
+  const { recruitmentId = null } = parseQuery(location.search);
   const { recruitmentItems } = useRecruitmentItem(recruitmentId);
+  const { recruitment } = useRecruitmentContext();
 
   const {
     form,
@@ -45,9 +46,10 @@ const ApplicationRegister = () => {
   } = useApplicationRegisterForm({
     recruitmentId,
     recruitmentItems,
-    currentRecruitment,
     status,
   });
+
+  const recruitmentMetadata = recruitment.findById(recruitmentId);
 
   const combineAnswers = (answers) =>
     recruitmentItems.map((item, index) => ({
@@ -103,7 +105,6 @@ const ApplicationRegister = () => {
         pathname: generatePath(PATH.APPLICATION_FORM, {
           status: PARAM.APPLICATION_FORM_STATUS.EDIT,
         }),
-        state: { currentRecruitment },
         search: generateQuery({ recruitmentId }),
       };
 
@@ -123,7 +124,7 @@ const ApplicationRegister = () => {
 
   return (
     <div className={styles.box}>
-      {currentRecruitment && <RecruitmentItem recruitment={currentRecruitment} />}
+      {recruitmentMetadata && <RecruitmentItem recruitment={recruitmentMetadata} />}
 
       <Container title="지원서 작성">
         <Form onSubmit={handleSubmit}>

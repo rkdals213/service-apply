@@ -72,9 +72,6 @@ const MyApplication = () => {
         status: PARAM.APPLICATION_FORM_STATUS.EDIT,
       }),
       search: generateQuery({ recruitmentId: recruitment.id }),
-      state: {
-        currentRecruitment: recruitment,
-      },
     });
   };
 
